@@ -42,4 +42,4 @@ class Post(db.Model):
 
     @property
     def likes(self):
-        return self.votes
+        return len(self.user_who_voted)

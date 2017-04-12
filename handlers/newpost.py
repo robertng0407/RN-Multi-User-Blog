@@ -20,7 +20,7 @@ class NewPost(BlogHandler):
         # If user enters subject and content, put data into database and redirects to blog post
         if subject and content:
             user = self.user
-            p = Post(user = user ,parent = blog_key(), subject = subject, content = content, created_by = self.user.name, votes = 0, upvote = 0, downvote = 0)
+            p = Post(user = user ,parent = blog_key(), subject = subject, content = content, created_by = self.user.name)
             p.put()
             self.redirect('/blog/%s' % str(p.key().id()))
 

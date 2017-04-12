@@ -43,17 +43,11 @@ class PostPage(BlogHandler):
                     error_vote = "You can't vote on your own post!"
                     self.render("post.html", p = post, creator = creator, error_vote = error_vote)
                 else:
-                    vote = int(self.request.get("vote"))
+                    # vote = int(self.request.get("vote"))
                     # If logged in user is not post creator, user can upvote/downvote
                     if self.user.name not in post.user_who_voted:
                         # Appends to user_who_voted list in Post model to keep track of who voted
                         post.user_who_voted.append(self.user.name)
-                        for users in post.user_who_voted:
-                            print users
-                        if vote > 0:
-                            post.votes = post.votes + 1
-                        elif vote < 0:
-                            post.votes = post.votes - 1
                         post.put()
                         self.redirect("/blog/%s" % (post_id))
                     else:
