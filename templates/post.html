@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="post">
+  <div class="container-fluid">
+    <div class="col-xs-1">
+      <form action="/blog/{{ p.key().id() }}" class="vote-form" method="post">
+        <div class="row">
+          <button class="vote-button" type="submit" name="vote" value="1"><i class="fa fa-chevron-up fa-3x" aria-hidden="true"></i></button>
+        </div>
+        <div class="row">
+          <h3 class="votes">{{ p.likes }}</h3>
+        </div>
+        <div class="row">
+          <button class="vote-button" type="submit" name="vote" value="-1"><i class="fa fa-chevron-down fa-3x" aria-hidden="true"></i></button>
+        </div>
+      </form>
+      <div class="row">
+        <div class="error">
+          {{ error_vote }}
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-11">
+      <div class="post-heading front-header">
+        <div class="page-header">
+          <a class="post-link" href="/blog/{{ p.key().id() }}"><h1>{{p.subject}}</h1></a>
+          <h4 class="right"><small>{{p.created.strftime("%b %d, %Y")}}</small></h4>
+          <h4 class="left"><small>{{p.created_by}}</small></h4>
+        </div>
+      </div>
+      <div class="well well-lg">
+        {{p.render_text() | safe}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-11 col-md-offset-2 buttons">
+        <div class="col-md-3 text-center">
+          <a href="/blog/{{ p.key().id() }}/comment"><button type="submit" class="btn btn-sm btn-block btn-primary">Add Comment</button></a>
+        </div>
+        {% if creator %}
+          <div class="col-md-3 text-center">
+            <a href="/blog/{{ p.key().id() }}/update"><button type="submit" class="btn btn-sm btn-block btn-success">Update</button></a>
+          </div>
+          <div class="col-md-3 text-center">
+            <form method="post">
+              <button type="submit" name="delete" value="delete" class="btn btn-sm btn-block btn-danger">Delete</button>
+            </form>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    {% if p.comment_id %}
+      <div class="col-md-12">
+        <h2 class="text-center">Comments</h2>
+        <hr>
+        {% for id in p.comment_id %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>{{ p.render_comment(id).created_by }}</strong> <span class="text-muted">commented on {{ p.render_comment(id).created.strftime("%b %d, %Y") }}</span>
+          </div>
+          <div class="panel-body">
+            <strong>{{ p.render_comment(id).title }}</strong>
+            <hr>
+            <p>{{ p.render_comment(id).comment }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+<!-- <div class="post-heading">
+  <div class="page-header">
+    <a class="post-link" href="/blog/{{ p.key().id() }}"><h1>{{p.subject}}</h1></a>
+    <h4 class="text-right"><small>{{p.created.strftime("%b %d, %Y")}}</small></h4>
+    <h4 class="text-left"><small>{{p.created_by}}</small></h4>
+  </div> -->
