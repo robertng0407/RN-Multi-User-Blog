@@ -12,9 +12,6 @@
         <div class="row">
           <h3 class="votes">{{ p.likes }}</h3>
         </div>
-        <div class="row">
-          <button class="vote-button" type="submit" name="vote" value="-1"><i class="fa fa-chevron-down fa-3x" aria-hidden="true"></i></button>
-        </div>
       </form>
       <div class="row">
         <div class="error">
@@ -51,19 +48,19 @@
         {% endif %}
       </div>
     </div>
-    {% if p.comment_id %}
+    {% if p.comments %}
       <div class="col-md-12">
         <h2 class="text-center">Comments</h2>
         <hr>
-        {% for id in p.comment_id %}
+        {% for comment in p.comments %}
         <div class="panel panel-default">
           <div class="panel-heading">
-            <strong>{{ p.render_comment(id).created_by }}</strong> <span class="text-muted">commented on {{ p.render_comment(id).created.strftime("%b %d, %Y") }}</span>
+            <strong>{{ comment.created_by }}</strong> <span class="text-muted">commented on {{ comment.created.strftime("%b %d, %Y") }}</span>
           </div>
           <div class="panel-body">
-            <strong>{{ p.render_comment(id).title }}</strong>
+            <strong>{{ comment.title }}</strong>
             <hr>
-            <p>{{ p.render_comment(id).comment }}</p>
+            <p>{{ comment.comment }}</p>
           </div>
         </div>
         {% endfor %}
