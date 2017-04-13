@@ -2,6 +2,8 @@ from handlers.bloghandler import BlogHandler
 from models.comment import Comment
 from models.post import Post
 
+
+
 # Handles /comment route
 class CommentHandler(BlogHandler):
     # Renders comment-form if user is logged in otherwise redirects to signup page
@@ -22,7 +24,7 @@ class CommentHandler(BlogHandler):
 
             # Gets the Post by id object, append the comment id, and puts into Gql
             post = Post.by_id(post_id)
-            post.comment_id.append(str(make_comment.key().id()))
+            post.comment_id.append(make_comment.key().id())
             post.put()
 
             self.redirect("/blog/%s" % (post_id))

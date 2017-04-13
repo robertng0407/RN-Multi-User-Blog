@@ -15,7 +15,7 @@ class Post(db.Model):
     created_by = db.StringProperty(required = True)
     votes = db.IntegerProperty()
     user_who_voted = db.ListProperty(str)
-    comment_id = db.ListProperty(str)
+    comment_id = db.ListProperty(int)
     last_modified = db.DateTimeProperty(auto_now = True)
 
 # Replaces new lines with a break
@@ -40,6 +40,7 @@ class Post(db.Model):
     def by_id(cls, post_id):
         return cls.get_by_id(int(post_id), parent = blog_key())
 
+# Returns length of users who voted
     @property
     def likes(self):
         return len(self.user_who_voted)
