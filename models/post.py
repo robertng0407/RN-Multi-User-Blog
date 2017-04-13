@@ -1,5 +1,5 @@
 from google.appengine.ext import db
-from models.comment import Comment
+# from models.comment import Comment
 from helpers import *
 from models.user import User
 
@@ -15,18 +15,12 @@ class Post(db.Model):
     created_by = db.StringProperty(required = True)
     votes = db.IntegerProperty()
     user_who_voted = db.ListProperty(str)
-    comment_id = db.ListProperty(int)
     last_modified = db.DateTimeProperty(auto_now = True)
 
 # Replaces new lines with a break
     def render_text(self):
         self._render_text = self.content.replace('\n', '<br>')
         return self._render_text
-
-# Returns comment object from Comment model based on id from comment_id
-    def render_comment(self, id):
-        comment = Comment.by_id(id)
-        return comment
 
 # Deletes all posts
     @classmethod
