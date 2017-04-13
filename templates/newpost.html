@@ -2,7 +2,6 @@
 
 {% block content %}
   <h1 class="text-center">{{ post_page }}</h1>
-
   <form method="post">
     <div class="form-group">
       <label for="subject"><h3>Subject</h3></label>
@@ -16,7 +15,7 @@
       <div class="error">{{error}}</div><br>
       <button type="submit" name="button" class="btn btn-primary">Submit</button>
       {% if post_page == "Update Post" %}
-        <a href="/blog/{{ blog_id }}"<button type="submit" name="button" class="btn btn-danger">Cancel</button></a>
+        <a href="/blog/{{blog_id}}"<button type="submit" name="button" class="btn btn-danger">Cancel</button></a>
       {% endif %}
     </div>
   </form>
