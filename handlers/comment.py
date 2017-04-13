@@ -19,12 +19,13 @@ class CommentHandler(BlogHandler):
             # Puts title, comment, and user into Gql
             title = self.request.get("title")
             comment = self.request.get("comment")
-            make_comment = Comment.make_comment(self.user.name, comment, title)
+            post = Post.by_id(post_id)
+            make_comment = Comment.make_comment(post, self.user.name, comment, title)
             make_comment.put()
 
             # Gets the Post by id object, append the comment id, and puts into Gql
-            post = Post.by_id(post_id)
-            post.comment_id.append(make_comment.key().id())
-            post.put()
+
+            # post.comment_id.append(make_comment.key().id())
+            # post.put()
 
             self.redirect("/blog/%s" % (post_id))
