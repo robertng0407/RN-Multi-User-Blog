@@ -1,21 +1,17 @@
 from handlers.bloghandler import BlogHandler
 from models.post import Post
 from helpers import *
+import time
 
 class PostPage(BlogHandler):
-    # Function to verify if the logged in user is the same person who created the post
-    def creator(self, post_id):
-        creator = None
-        if self.user:
-            post = Post.by_id(post_id)
-            creator = self.user.name == post.created_by or None
-        return creator
     def get(self, post_id):
         # Grabs the post object based on post_id
         key = db.Key.from_path('Post', int(post_id), parent=blog_key())
         post = db.get(key)
+        post.comments.order('-created')
 
-        creator = self.creator(post_id)
+        # Verify if the logged in user is the same person who created the post
+        creator = self.user.name == post.created_by or None
 
         if not post:
             self.error(404)
@@ -25,8 +21,8 @@ class PostPage(BlogHandler):
         # If creator is None, these buttons won't show
         self.render("post.html", p = post, creator = creator)
     def post(self, post_id):
-        creator = self.creator(post_id)
         post = Post.by_id(post_id)
+        creator = self.user.name == post.created_by or None
         # Delete post if user clicks delete
         delete = self.request.get("delete")
         if delete == "delete":
