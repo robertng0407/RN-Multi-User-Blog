@@ -16,6 +16,8 @@
       <button type="submit" name="button" class="btn btn-primary">Submit</button>
       {% if post_page == "Update Post" %}
         <a href="/blog/{{blog_id}}"<button type="submit" name="button" class="btn btn-danger">Cancel</button></a>
+      {% else %}
+        <a href="/"<button type="submit" name="button" class="btn btn-danger">Cancel</button></a>
       {% endif %}
     </div>
   </form>
