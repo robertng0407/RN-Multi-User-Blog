@@ -41,7 +41,7 @@
             <a href="/blog/{{ p.key().id() }}/update"><button type="submit" class="btn btn-sm btn-block btn-success">Update</button></a>
           </div>
           <div class="col-md-3 text-center">
-            <form method="post">
+            <form action="/blog/{{ p.key().id() }}/delete" method="post">
               <button type="submit" name="delete" value="delete" class="btn btn-sm btn-block btn-danger">Delete</button>
             </form>
           </div>
