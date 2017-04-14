@@ -36,6 +36,7 @@ from handlers.blogfront import BlogFront
 from handlers.postpage import PostPage
 from handlers.updatepost import UpdatePost
 from handlers.newpost import NewPost
+from handlers.deletepost import DeletePost
 
 
 # Routes
@@ -44,6 +45,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/blog/(\d+)', PostPage),
                                ('/blog/(\d+)/comment', CommentHandler),
                                ('/blog/(\d+)/update', UpdatePost),
+                               ('/blog/(\d+)/delete', DeletePost),
                                ('/blog/newpost', NewPost),
                                ('/signup', Register),
                                ('/login', Login),
