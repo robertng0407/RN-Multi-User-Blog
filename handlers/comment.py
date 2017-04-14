@@ -1,6 +1,7 @@
 from handlers.bloghandler import BlogHandler
 from models.comment import Comment
 from models.post import Post
+import time
 
 
 
@@ -8,20 +9,22 @@ from models.post import Post
 class CommentHandler(BlogHandler):
     # Renders comment-form if user is logged in otherwise redirects to signup page
     def get(self, post_id):
-        if self.user:
+
+        if Post.by_id(post_id) and self.user:
             self.render("comment-form.html")
         else:
             self.redirect("/signup")
 
 
     def post(self, post_id):
-        if self.user:
+        post = Post.by_id(post_id)
+        if post and self.user:
             # Puts title, comment, and user into Gql
             title = self.request.get("title")
             comment = self.request.get("comment")
-            post = Post.by_id(post_id)
             make_comment = Comment.make_comment(post, self.user.name, comment, title)
             make_comment.put()
+            time.sleep(0.1)
 
             # Gets the Post by id object, append the comment id, and puts into Gql
 
@@ -29,3 +32,5 @@ class CommentHandler(BlogHandler):
             # post.put()
 
             self.redirect("/blog/%s" % (post_id))
+        else:
+            self.redirect("/signup")
