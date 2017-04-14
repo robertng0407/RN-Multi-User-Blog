@@ -8,23 +8,25 @@ class PostPage(BlogHandler):
         # Grabs the post object based on post_id
         key = db.Key.from_path('Post', int(post_id), parent=blog_key())
         post = db.get(key)
-        post.comments.order('-created')
 
-        # Verify if the logged in user is the same person who created the post
-        creator = self.user.name == post.created_by or None
+        if post:
+            post.comments.order('-created')
 
-        if not post:
+            # Verify if the logged in user is the same person who created the post
+            creator = self.user.name == post.created_by or None
+            # Renders the post page. If creator is true, the page with show an update and delete button.
+            # If creator is None, these buttons won't show
+            self.render("post.html", p = post, creator = creator)
+
+        else:
             self.error(404)
             return
 
-        # Renders the post page. If creator is true, the page with show an update and delete button.
-        # If creator is None, these buttons won't show
-        self.render("post.html", p = post, creator = creator)
     def post(self, post_id):
         post = Post.by_id(post_id)
         creator = self.user.name == post.created_by or None
 
-        if self.user:
+        if self.user and post and creator:
             post = Post.by_id(post_id)
             # If creator of post is the same as logged in user, an error will render on page
             if self.user.name == post.created_by:
