@@ -50,8 +50,10 @@
     </div>
     {% if p.comments %}
       <div class="col-md-12">
-        <h2 class="text-center">Comments</h2>
-        <hr>
+        {% if p.comments.count() > 0 %}
+          <h2 class="text-center">Comments</h2>
+          <hr>
+        {% endif %}
         {% for comment in p.comments %}
         <div class="panel panel-default">
           <div class="panel-heading">
