@@ -11,7 +11,7 @@ class CommentHandler(BlogHandler):
     def get(self, post_id):
 
         if Post.by_id(post_id) and self.user:
-            self.render("comment-form.html")
+            self.render("comment-form.html", comment_page = "Post a Comment")
         else:
             self.redirect("/signup")
 
