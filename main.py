@@ -39,6 +39,7 @@ from handlers.newpost import NewPost
 from handlers.deletepost import DeletePost
 from handlers.likepost import LikePost
 from handlers.updatecomment import UpdateComment
+from handlers.deletecomment import DeleteComment
 
 
 # Routes
@@ -50,6 +51,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/blog/(\d+)/delete', DeletePost),
                                ('/blog/(\d+)/like', LikePost),
                                ('/blog/(\d+)/comment/(\d+)', UpdateComment),
+                               ('/blog/(\d+)/comment/(\d+)/delete', DeleteComment),
                                ('/blog/newpost', NewPost),
                                ('/signup', Register),
                                ('/login', Login),
