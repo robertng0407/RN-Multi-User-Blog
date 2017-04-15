@@ -60,9 +60,24 @@
             <strong>{{ comment.created_by }}</strong> <span class="text-muted">commented on {{ comment.created.strftime("%b %d, %Y") }}</span>
           </div>
           <div class="panel-body">
-            <strong>{{ comment.title }}</strong>
+            <div class="col-sm-10">
+              <strong>{{ comment.title }}</strong>
+            </div>
+            {% if comment.created_by == user.name %}
+              <div class="col-sm-1">
+                <a class="text-right" href="/blog/{{p.key().id()}}/comment/{{comment.key().id()}}"><button type="submit" class="btn btn-sm btn-block btn-success">Edit</button></a>
+              </div>
+              <div class="col-sm-1">
+                <form action="/blog/{{p.key().id()}}/comment/{{comment.key().id()}}/delete" method="post">
+                  <button type="submit" class="btn btn-sm btn-block btn-danger">Delete</button></a>
+                </form>
+              </div>
+            {% endif %}
+            <br>
             <hr>
-            <p>{{ comment.comment }}</p>
+            <div class="col-sm-12">
+              <p>{{ comment.comment }}</p>
+            </div>
           </div>
         </div>
         {% endfor %}
