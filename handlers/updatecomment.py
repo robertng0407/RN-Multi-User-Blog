@@ -24,10 +24,14 @@ class UpdateComment(PostPage):
         if creator and post and comment_obj:
             title = self.request.get("title")
             comment = self.request.get("comment")
-            comment_obj.title = title
-            comment_obj.comment = comment
-            comment_obj.put()
-            time.sleep(0.1)
-            self.redirect("/blog/%s" % (post_id))
+            if title and comment:
+                comment_obj.title = title
+                comment_obj.comment = comment
+                comment_obj.put()
+                time.sleep(0.1)
+                self.redirect("/blog/%s" % (post_id))
+            else:
+                error = "Missing Fields!"
+                self.render("comment-form.html", comment_page = "Update comment", comment = comment, title = title, error = error)
         else:
             self.redirect("/login")

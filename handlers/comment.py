@@ -22,15 +22,19 @@ class CommentHandler(BlogHandler):
             # Puts title, comment, and user into Gql
             title = self.request.get("title")
             comment = self.request.get("comment")
-            make_comment = Comment.make_comment(post, self.user.name, comment, title)
-            make_comment.put()
-            time.sleep(0.1)
+            if title and comment:
+                make_comment = Comment.make_comment(post, self.user.name, comment, title)
+                make_comment.put()
+                time.sleep(0.1)
 
             # Gets the Post by id object, append the comment id, and puts into Gql
 
             # post.comment_id.append(make_comment.key().id())
             # post.put()
 
-            self.redirect("/blog/%s" % (post_id))
+                self.redirect("/blog/%s" % (post_id))
+            else:
+                error = "Missing Fields!"
+                self.render("comment-form.html", comment_page = "Post a Comment", error = error)
         else:
-            self.redirect("/signup")
+            self.redirect("/login")
