@@ -6,10 +6,8 @@ import time
 class DeletePost(PostPage):
     def post(self, post_id):
         post = Post.by_id(post_id)
-        if self.user:
+        if self.user.name == post.created_by:
             creator = self.user.name == post.created_by
-        else:
-            creator = None
 
         if self.user and post:
             if creator:
