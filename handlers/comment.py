@@ -35,6 +35,6 @@ class CommentHandler(BlogHandler):
                 self.redirect("/blog/%s" % (post_id))
             else:
                 error = "Missing Fields!"
-                self.render("comment-form.html", comment_page = "Post a Comment", error = error)
+                self.render("comment-form.html", comment_page = "Post a Comment", error = error, title = title, comment = comment)
         else:
             self.redirect("/login")
