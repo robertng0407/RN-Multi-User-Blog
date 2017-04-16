@@ -20,7 +20,7 @@ class UpdateComment(PostPage):
         creator = None
         comment_obj = Comment.by_id(comment_id)
         if self.user and post:
-            creator = post.comments.filter("created_by =", self.user.name).get()
+            creator = self.user.name == comment_obj.created_by
         if creator and post and comment_obj:
             title = self.request.get("title")
             comment = self.request.get("comment")
